@@ -8,6 +8,8 @@ fun main(){
 fun romanToInt(s: String): Int {
     var prev = 0
     var sum = 0
+    val tere =HashMap<Char, Int>()
+    tere.getOrDefault('s',0)
 
     for (i in s.length - 1 downTo 0) {
         val current = when (s[i]) {
