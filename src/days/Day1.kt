@@ -5,9 +5,9 @@ fun main(){
 //    val resullt  = hasDuplicate(arr)
 //    println(resullt)
 
-    val heystack = "hellp"
-    val needle = "ll"
-    val result  = strStr2(heystack,needle)
+    val heystack = "mississippi"
+    val needle = "issip"
+    val result  = strStr3(heystack,needle)
     println(result)
 }
 
@@ -55,4 +55,24 @@ fun strStr2(haystack: String,needle: String):Int{
         left = right
     }
     return -1
+}
+
+
+fun strStr3(haystack: String,needle: String):Int{
+    // optimized Two Pointer
+
+    var i = 0
+    var j = 0
+    while (i < haystack.length){
+        if (haystack[i] == needle[j]){
+            i++
+            j++
+            if (j == needle.length) return i-j
+        }else {
+            i = i-j+1
+            j=0
+        }
+    }
+    return -1
+
 }
