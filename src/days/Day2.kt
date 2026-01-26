@@ -5,8 +5,13 @@ fun main(){
 //    val result = groupAnagrams2(strs)
 //    println(result?.joinToString())
 
-    val str = "biren sharmahe"
-    println(lengthOfLastWord2(str))
+//    val str = "biren sharmahe"
+//    println(lengthOfLastWord2(str))
+
+    val num = intArrayOf(7,7)
+    val k = 1
+    val result  = topKFrequent2(num,k)
+    println(result.joinToString())
 
 }
 
@@ -150,4 +155,100 @@ fun lengthOfLastWord2(s: String): Int {
     }
 
     return size
+}
+
+
+/**
+ * Loop runs n times : O (n)
+ *
+ *
+ * val sorted = map.entries.sortedByDescending { it.value }
+ *
+ * Sorting m elements : O(m log m)
+ *
+ * for (i in 0 until k) {} : loop run for k O(k)
+ *
+ * Total Time complexity: O(n) + O(m log m) + O(k) = O(n log n)
+ *
+ */
+fun topKFrequent(nums: IntArray, k: Int): IntArray {
+    val map = HashMap<Int,Int> () //store item and freq
+
+    //update the map
+    for (i in nums){
+        map[i] = map.getOrDefault(i,0)+1
+    }
+
+    //sorting the map by value
+    val sorted = map.entries.sortedByDescending { it.value }
+    val list = mutableListOf<Int>()
+    for (i in 0..k-1){
+        list.add(sorted[i].key)
+    }
+
+    return intArrayOf()
+}
+
+/**
+ * TIME COMPLEXITY
+ *
+ * for (num in nums) -> O(n)
+ *
+ * for ((num, freq) in freqMap) -> O(n)
+ *
+ * out loop: for (i in buckets.size - 1 downTo 0) -> O(n)
+ *
+ * inner loop :  for (num in buckets[i]) -> O(m)
+ *
+ * inner + outer O(n+m)
+ *
+ * TOTAL = O(n) + O(n) + O(m) + O(n) = O(n)
+ *
+ *
+ */
+fun topKFrequent2(nums: IntArray, k: Int): IntArray {
+
+    // 1️⃣ Step 1: Build frequency map
+    // Key   -> number from nums
+    // Value -> how many times it appears
+    val freqMap = HashMap<Int, Int>()
+    for (num in nums) {
+        // Increase count of num by 1
+        freqMap[num] = freqMap.getOrDefault(num, 0) + 1
+    }
+
+    // 2️⃣ Step 2: Create buckets
+    // Index = frequency (1 to n)
+    // Value = list of numbers with that frequency
+    //
+    // We use nums.size + 1 because
+    // maximum possible frequency of a number is nums.size
+    val buckets = Array(nums.size + 1) { mutableListOf<Int>() }
+
+    // 3️⃣ Step 3: Put numbers into their frequency buckets
+    for ((num, freq) in freqMap) {
+        // If num appears 'freq' times,
+        // add it to bucket[freq]
+        buckets[freq].add(num)
+    }
+
+    // 4️⃣ Step 4: Collect top k frequent elements
+    val result = mutableListOf<Int>()
+
+    // Start from highest possible frequency and go down
+    for (i in buckets.size - 1 downTo 0) {
+
+        // Each bucket may contain multiple numbers
+        for (num in buckets[i]) {
+            result.add(num)
+
+            // Stop once we have collected k elements
+            if (result.size == k) {
+                return result.toIntArray()
+            }
+        }
+    }
+
+    // This line is technically unreachable if input is valid
+    return intArrayOf()
 }
