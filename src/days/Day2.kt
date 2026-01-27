@@ -7,11 +7,12 @@ fun main(){
 
 //    val str = "biren sharmahe"
 //    println(lengthOfLastWord2(str))
+//
+//    val num = intArrayOf(7,7)
+//    val k = 1
+//    val result  = topKFrequent2(num,k)
+//    println(result.joinToString())
 
-    val num = intArrayOf(7,7)
-    val k = 1
-    val result  = topKFrequent2(num,k)
-    println(result.joinToString())
 
 }
 
