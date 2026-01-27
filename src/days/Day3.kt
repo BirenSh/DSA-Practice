@@ -71,21 +71,48 @@ fun productExceptSelf1(nums: IntArray): IntArray {
  * Space Complex: O(1) because output array ignored here
  */
 fun productExceptSelf3(nums: IntArray): IntArray {
-    val result  = IntArray(nums.size)
 
+    val n = nums.size
+
+    // This array will store the final answer.
+    // NOTE: This is OUTPUT space, so it does NOT count toward extra space.
+    val result = IntArray(n)
+
+    // ------------------------------------------------
+    // Step 1: Build LEFT products directly in result[]
+    // ------------------------------------------------
+    // result[i] will contain product of all elements
+    // to the LEFT of index i
+    //
+    // For index 0, there are no elements on the left,
+    // so we initialize it with 1 (multiplicative identity)
     result[0] = 1
-    for (i in 1 until nums.size){
-        result[i] = result[i-1] * nums[i-1]
-    }
-    println(result.joinToString ())
 
+    for (i in 1 until n) {
+        // Multiply previous left product with previous element
+        result[i] = result[i - 1] * nums[i - 1]
+    }
+
+    // ------------------------------------------------
+    // Step 2: Multiply RIGHT products on the fly
+    // ------------------------------------------------
+    // rightProduct will store product of elements
+    // to the RIGHT of current index
     var rightProduct = 1
-    for (i in nums.size-1 downTo 0){
-        result[i] *= rightProduct
-        rightProduct *= nums[i]
 
+    // Traverse from right to left
+    for (i in n - 1 downTo 0) {
+
+        // Multiply left product (already in result[i])
+        // with right product
+        result[i] *= rightProduct
+
+        // Update rightProduct for next iteration
+        rightProduct *= nums[i]
     }
 
+    // result now contains product except self for each index
     return result
 }
+
 
