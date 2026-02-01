@@ -42,3 +42,8 @@ fun subarraySum2(nums: IntArray, k: Int): Int {
     println(map)
     return count
 }
+
+fun test(){
+    val sAlhpa = IntArray(26)
+    sAlhpa.isNotEmpty()
+}
