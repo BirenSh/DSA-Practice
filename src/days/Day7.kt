@@ -79,7 +79,7 @@ fun isValidSudoku(board: Array<CharArray>): Boolean {
             //check row
             if (!rowSeen[row].add(char)) return false
 
-            if (!colSeen[col].Hadd(char)) return false
+            if (!colSeen[col].add(char)) return false
 
             val boxIndex = (row / 3) * 3 + (col / 3)
             if (boxes[boxIndex].add(char)) return false
